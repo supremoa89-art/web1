@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💖 Nosso Amor - My Melody & Kuromi</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600;700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(45deg, #FFB6C1, #E6E6FA, #FFE4E1);
+            background-size: 300% 300%;
+            animation: gradientShift 8s ease infinite;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+        /* Decorações nos cantos */
+        .corner-decoration {
+            position: fixed;
+            z-index: 1;
+        }
+        .corner-decoration.top-left {
+            top: 20px;
+            left: 20px;
+            width: 80px;
+            height: 80px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="0.9em" font-size="60">🎀</text></svg>');
+            animation: bounce 2s infinite;
+        }
+        .corner-decoration.top-right {
+            top: 20px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="0.9em" font-size="60">💜</text></svg>');
+            animation: bounce 2s infinite 0.5s;
+        }
+        .corner-decoration.bottom-left {
+            bottom: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="0.9em" font-size="50">🌸</text></svg>');
+            animation: float 3s ease-in-out infinite;
+        }
+        .corner-decoration.bottom-right {
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="0.9em" font-size="50">⭐</text></svg>');
+            animation: float 3s ease-in-out infinite 1s;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .title {
+            font-size: 3em;
+            font-weight: 700;
+            background: linear-gradient(45deg, #FF69B4, #8A2BE2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            animation: titleGlow 2s ease-in-out infinite alternate;
+        }
+        @keyframes titleGlow {
+            from { filter: drop-shadow(0 0 5px rgba(255, 105, 180, 0.5)); }
+            to { filter: drop-shadow(0 0 20px rgba(138, 43, 226, 0.8)); }
+        }
+        .characters {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin: 20px 0;
+        }
+        .character {
+            font-size: 4em;
+            animation: characterDance 3s ease-in-out infinite;
+        }
+        .character.melody {
+            animation-delay: 0s;
+        }
+        .character.kuromi {
+            animation-delay: 1.5s;
+        }
+        @keyframes characterDance {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(5deg); }
+            50% { transform: translateY(0px) rotate(0deg); }
+            75% { transform: translateY(-5px) rotate(-3deg); }
+        }
+        .timer-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 182, 193, 0.5);
+            animation: cardFloat 4s ease-in-out infinite;
+        }
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+        .timer-title {
+            font-size: 1.8em;
+            color: #8A2BE2;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .timer-display {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .time-unit {
+            background: linear-gradient(135deg, #FF69B4, #8A2BE2);
+            color: white;
+            padding: 15px 10px;
+            border-radius: 15px;
+            min-width: 80px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            animation: pulse 2s infinite;
+        }
+        .time-number {
+            font-size: 2em;
+            font-weight: 700;
+            display: block;
+        }
+        .time-label {
+            font-size: 0.8em;
+            opacity: 0.9;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .gallery-section {
+            margin: 40px 0;
+        }
+        .gallery-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 182, 193, 0.5);
+            animation: cardFloat 4s ease-in-out infinite 1s;
+        }
+        .gallery-title {
+            text-align: center;
+            font-size: 2em;
+            color: #8A2BE2;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .photo-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 3px solid rgba(255, 105, 180, 0.3);
+        }
+        .photo-item:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border-color: #FF69B4;
+        }
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            padding: 15px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        .photo-item:hover .photo-overlay {
+            transform: translateY(0);
+        }
+        .photo-title {
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+        .photo-date {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            animation: fadeIn 0.3s ease;
+        }
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            animation: modalPop 0.4s ease-out;
+            display: flex;
+            flex-direction: column;
+        }
+        @keyframes modalPop {
+            0% {
+                transform: scale(0.7);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 1002;
+        }
+        .close-modal:hover {
+            background: rgba(255, 105, 180, 0.8);
+            transform: scale(1.1);
+        }
+        
+        .modal-image-container {
+            width: 100%;
+            max-height: 70vh;
+            overflow: hidden;
+        }
+        .modal-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .modal-info {
+            padding: 20px;
+            background: linear-gradient(135deg, #FFE4E1, #E6E6FA);
+        }
+        .modal-title {
+            font-size: 1.5em;
+            color: #8A2BE2;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .modal-description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        .modal-date {
+            color: #FF69B4;
+            font-weight: 600;
+        }
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 105, 180, 0.8);
+            border: none;
+            color: white;
+            font-size: 2em;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+        .nav-arrow:hover {
+            background: #FF69B4;
+            transform: translateY(-50%) scale(1.1);
+        }
+        .nav-arrow.prev { left: 20px; }
+        .nav-arrow.next { right: 20px; }
+
+        
+        .music-modal-content {
+            background: linear-gradient(135deg, #E6E6FA, #FFE4E1);
+            border-radius: 20px;
+            padding: 20px;
+            width: 90%;
+            max-width: 640px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .music-title {
+            font-size: 1.5em;
+            color: #8A2BE2;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; 
+            height: 0;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        
+        .quiz-section { margin: 40px 0; }
+        .quiz-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(138, 43, 226, 0.3);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideIn 0.8s ease-out forwards;
+        }
+        @keyframes slideIn { to { transform: translateY(0); opacity: 1; } }
+        .quiz-question { font-size: 1.4em; color: #8A2BE2; margin-bottom: 20px; font-weight: 600; }
+        .quiz-options { display: grid; gap: 10px; }
+        .quiz-option {
+            background: linear-gradient(135deg, #FFE4E1, #E6E6FA);
+            border: 2px solid transparent;
+            padding: 15px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+        .quiz-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+            transition: left 0.5s;
+        }
+        .quiz-option:hover {
+            transform: translateX(5px);
+            border-color: #FF69B4;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+        }
+        .quiz-option:hover::before { left: 100%; }
+        .quiz-option.correct { background: linear-gradient(135deg, #90EE90, #98FB98); border-color: #32CD32; animation: correctAnswer 0.6s ease; }
+        .quiz-option.wrong { background: linear-gradient(135deg, #FFB6C1, #FFA0B4); border-color: #FF69B4; animation: wrongAnswer 0.6s ease; }
+        @keyframes correctAnswer { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes wrongAnswer { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+        
+       
+        .love-letter {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 182, 193, 0.5);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .love-letter:hover { transform: scale(1.02); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15); }
+        .letter-content { display: none; animation: fadeInUp 0.8s ease-out; }
+        .letter-content.show { display: block; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+       
+        .heart-particle {
+            position: fixed;
+            color: #FF69B4;
+            font-size: 20px;
+            pointer-events: none;
+            z-index: 9999;
+            animation: heartFloat 3s ease-out forwards;
+        }
+        @keyframes heartFloat { 0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; } 100% { transform: translateY(-200px) rotate(360deg) scale(0); opacity: 0; } }
+        
+        
+        .playlist-section { margin: 40px 0; }
+        .playlist-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(138, 43, 226, 0.3);
+            animation: cardFloat 4s ease-in-out infinite 2s;
+        }
+        .playlist-title { text-align: center; font-size: 2em; color: #8A2BE2; margin-bottom: 30px; font-weight: 600; }
+        .song-list { list-style: none; padding: 0; }
+        .song-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #E6E6FA, #FFE4E1);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: slideInItem 0.5s forwards;
+            cursor: pointer; 
+        }
+        .song-item:hover { transform: scale(1.03); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); }
+        .song-icon { font-size: 1.5em; margin-right: 15px; }
+        .song-details { font-size: 1.1em; }
+        .song-title { font-weight: 600; color: #8A2BE2; }
+        .song-artist { font-size: 0.9em; color: #555; }
+        @keyframes slideInItem { to { opacity: 1; transform: translateX(0); } }
+        
+        
+        @media (max-width: 768px) {
+            .title { font-size: 2em; }
+            .characters { gap: 20px; }
+            .character { font-size: 3em; }
+            .timer-display { justify-content: center; }
+            .time-unit { min-width: 70px; }
+            .corner-decoration { display: none; }
+            .photo-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+            .nav-arrow { font-size: 1.5em; width: 40px; height: 40px; }
+        }
+        
+        
+        #preloader-romantico {
+            position: fixed; z-index: 3000; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(135deg, #FFE4E1 0%, #E6E6FA 100%);
+            display: flex; align-items: center; justify-content: center;
+            transition: opacity .8s cubic-bezier(.19,1,.22,1); opacity: 1;
+        }
+        #preloader-romantico.hide { opacity: 0; pointer-events: none; }
+        .preloader-carta {
+            background: white; border-radius: 25px; padding: 35px 30px 30px 30px;
+            box-shadow: 0 0 32px 0 #db9dcc55; max-width: 390px; text-align: center;
+            border: 3px solid #FFB6C1; animation: cartaPulse 3s infinite alternate; position: relative;
+        }
+        @keyframes cartaPulse { 0% { box-shadow: 0 0 32px 2px #db9dcc55; transform: scale(1);} 100% { box-shadow: 0 0 40px 12px #ffdcf180; transform: scale(1.025);} }
+        .carta-topo { font-size: 1.4em; color: #8A2BE2; font-weight: bold; margin-bottom: 18px; display:flex;justify-content:center;gap:6px; }
+        .carta-coracao { animation: coracaoPulse 2s infinite alternate;}
+        @keyframes coracaoPulse { 0% {opacity: 0.8; transform: scale(1);} 100% {opacity: 1; transform: scale(1.2);} }
+        .carta-titulo { margin: 0 7px; }
+        .carta-texto { font-size: 1.13em; color: #555; margin-bottom: 18px; line-height: 1.7; letter-spacing:0.01em; }
+        .carta-rodape { color: #8A2BE2; font-size: 1.02em; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .pontos::after { content: ''; animation: pontosAnim 1.4s infinite steps(3); }
+        @keyframes pontosAnim { 0% { content: ''; } 33% { content: '.'; } 66% { content: '..'; } 100% { content: '...'; } }
+        body.preloading { overflow: hidden !important; }
+    </style>
+</head>
+<body>
+    
+    <div id="preloader-romantico">
+        <div class="preloader-carta">
+            <div class="carta-topo">
+                <span class="carta-coracao">💖</span>
+                <span class="carta-titulo">Carta de Boas-vindas</span>
+                <span class="carta-coracao">💖</span>
+            </div>
+            <div class="carta-texto">
+                Olá, amor!<br>
+                Este cantinho foi feito com carinho só para nós.<br>
+                Que cada clique seja uma lembrança, cada minigame um sorriso,<br>
+                e cada detalhe um pedacinho do quanto eu te amo.<br><br>
+                O nosso amor é como esse site: cheio de cor, momentos únicos<br>
+                e muito, muito mais para criarmos juntos.<br>
+                <b>Bem-vinda ao nosso universo, My Melody e Kuromi! 💖🖤</b>
+            </div>
+            <div class="carta-rodape">Carregando nosso amor... <span class="pontos"></span></div>
+        </div>
+    </div>
+
+    <div class="corner-decoration top-left"></div>
+    <div class="corner-decoration top-right"></div>
+    <div class="corner-decoration bottom-left"></div>
+    <div class="corner-decoration bottom-right"></div>
+
+    <div class="container">
+        <header class="header">
+            <h1 class="title">💖 Nosso Amor Eterno 💖</h1>
+            <div class="characters">
+                <div class="character melody">🐰</div>
+                <div class="character kuromi">🖤</div>
+            </div>
+        </header>
+
+        <div class="timer-card">
+            <h2 class="timer-title">Juntos há...</h2>
+            <div class="timer-display" id="timer">
+                
+            </div>
+        </div>
+
+        
+        <div class="gallery-section">
+            <div class="gallery-card">
+                <h2 class="gallery-title">📸 Nossa Galeria de Momentos 📸</h2>
+                <div class="photo-grid" id="photoGrid"></div>
+            </div>
+        </div>
+
+       
+        <div class="playlist-section">
+            <div class="playlist-card">
+                <h2 class="playlist-title">🎵 Nossa Playlist 🎵</h2>
+                <ul class="song-list" id="songList"></ul>
+            </div>
+        </div>
+
+        
+        <div class="quiz-section">
+           
+        </div>
+
+        
+        <div class="love-letter" onclick="openLetter(this)">
+           
+        </div>
+    </div>
+
+   
+    <div class="modal" id="photoModal">
+        <button class="close-modal" onclick="closeModal()">×</button>
+        <button class="nav-arrow prev" onclick="prevPhoto()">❮</button>
+        <button class="nav-arrow next" onclick="nextPhoto()">❯</button>
+        <div class="modal-content">
+            <div class="modal-image-container">
+                <img src="" alt="Foto do casal" class="modal-image" id="modalImage">
+            </div>
+            <div class="modal-info">
+                <h3 class="modal-title" id="modalTitle"></h3>
+                <p class="modal-description" id="modalDescription"></p>
+                <p class="modal-date" id="modalDate"></p>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="modal" id="musicModal">
+        <div class="music-modal-content modal-content">
+            <button class="close-modal" onclick="closeMusicPlayer()">×</button>
+            <h3 class="music-title" id="musicTitle"></h3>
+            <div class="iframe-container">
+                <iframe id="youtubePlayer" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+       
+        const photos = [
+            { image: 'imagens/encontro.jpg', title: 'Nosso Primeiro Encontro', description: 'Aquele dia mágico na praça quando tudo começou...', date: '02/05/2025' },
+            { image: 'imagens/seila.png', title: 'Primeiro Beijo', description: 'Na esquina da sua casa, onde selamos nosso amor.', date: '15/05/2025' },
+            { image: 'imagens/5.jpg', title: 'Nossa Primeira Viagem', description: 'Aquele fim de semana inesquecível na praia.', date: '20/07/2025' },
+                { image: 'imagens/encontro.jpg', title: 'Nosso Primeiro Encontro', description: 'Aquele dia mágico na praça quando tudo começou...', date: '02/05/2025' },
+            { image: 'https://via.placeholder.com/400x400/E6E6FA/000000?text=Beijo', title: 'Primeiro Beijo', description: 'Na esquina da sua casa, onde selamos nosso amor.', date: '15/05/2025' },
+            { image: 'https://via.placeholder.com/400x400/8A2BE2/FFFFFF?text=Viagem', title: 'Nossa Primeira Viagem', description: 'Aquele fim de semana inesquecível na praia.', date: '20/07/2025' },
+        ];
+
+        const playlist = [
+            { title: 'Washing Machine Heart', artist: 'Mitski', icon: '💖', youtubeId: '3vjkh-acmTE' },
+            { title: 'rei dos demônios', artist: 'Link Do Zap', icon: '✨', youtubeId: 'Hhu09xdNzZ8' },
+            { title: 'I Was Made For Lovin You', artist: 'Kiss', icon: '❤️', youtubeId: 'ZhIsAZO5gl0' },
+            { title: 'ruler of my heart ', artist: 'BL8M, Rubyeye', icon: '🎶', youtubeId: 'lp-EO5I60KA' },
+            { title: 'Bad Romance', artist: 'Lady Gaga', icon: '⭐', youtubeId: 'qrO4YZeyl0I' }
+        ];
+
+        let currentPhotoIndex = 0;
+
+        
+        function openMusicPlayer(youtubeId, songTitle) {
+            const musicModal = document.getElementById('musicModal');
+            const player = document.getElementById('youtubePlayer');
+            const titleElement = document.getElementById('musicTitle');
+            
+            titleElement.textContent = songTitle;
+            player.src = `https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`;
+            musicModal.classList.add('show');
+        }
+
+        function closeMusicPlayer() {
+            const musicModal = document.getElementById('musicModal');
+            const player = document.getElementById('youtubePlayer');
+            
+            player.src = ''; 
+            musicModal.classList.remove('show');
+        }
+
+       
+        function openModal(index) {
+            currentPhotoIndex = index;
+            const photo = photos[index];
+            document.getElementById('modalImage').src = photo.image;
+            document.getElementById('modalTitle').textContent = photo.title;
+            document.getElementById('modalDescription').textContent = photo.description;
+            document.getElementById('modalDate').textContent = photo.date;
+            document.getElementById('photoModal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('photoModal').classList.remove('show');
+        }
+
+        function prevPhoto() {
+            currentPhotoIndex = (currentPhotoIndex - 1 + photos.length) % photos.length;
+            openModal(currentPhotoIndex);
+        }
+
+        function nextPhoto() {
+            currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
+            openModal(currentPhotoIndex);
+        }
+
+       
+        function checkAnswer(element, isCorrect) {
+            const parentOptions = element.parentElement;
+            if (parentOptions.classList.contains('answered')) return;
+            parentOptions.classList.add('answered');
+            element.classList.add(isCorrect ? 'correct' : 'wrong');
+        }
+
+        function openLetter(card) {
+            const letter = card.querySelector('.letter-content');
+            if (letter.classList.contains('show')) return;
+            letter.classList.add('show');
+        }
+
+        document.body.addEventListener('click', function(e){
+            if (e.target.closest('.quiz-options, .modal, .love-letter, .song-item')) return;
+            const particle = document.createElement('div');
+            particle.className = 'heart-particle';
+            particle.textContent = ['💖','💕','💗','💘','💝','💞'][Math.floor(Math.random()*6)];
+            particle.style.left = (e.clientX - 10) + 'px';
+            particle.style.top = (e.clientY - 10) + 'px';
+            particle.style.fontSize = (18 + Math.random()*14) + 'px';
+            document.body.appendChild(particle);
+            setTimeout(()=>particle.remove(), 3000);
+        });
+
+       
+        function updateTimer() {
+            const startDate = new Date('2025-05-02T00:00:00-03:00');
+            const now = new Date();
+            const diff = now - startDate;
+
+            if (diff < 0) return;
+
+            let tempDate = new Date(startDate);
+            let years = now.getFullYear() - tempDate.getFullYear();
+            let months = now.getMonth() - tempDate.getMonth();
+            let days = now.getDate() - tempDate.getDate();
+
+            if (days < 0) {
+                months--;
+                days += new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+            }
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('years').textContent = years;
+            document.getElementById('months').textContent = months;
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+        }
+
+        function buildPage() {
+           
+            document.getElementById('timer').innerHTML = `
+                <div class="time-unit"><span class="time-number" id="years">0</span><span class="time-label">Anos</span></div>
+                <div class="time-unit"><span class="time-number" id="months">0</span><span class="time-label">Meses</span></div>
+                <div class="time-unit"><span class="time-number" id="days">0</span><span class="time-label">Dias</span></div>
+                <div class="time-unit"><span class="time-number" id="hours">0</span><span class="time-label">Horas</span></div>
+                <div class="time-unit"><span class="time-number" id="minutes">0</span><span class="time-label">Minutos</span></div>
+                <div class="time-unit"><span class="time-number" id="seconds">0</span><span class="time-label">Segundos</span></div>`;
+            
+          
+            const photoGrid = document.getElementById('photoGrid');
+            photos.forEach((photo, index) => {
+                photoGrid.innerHTML += `
+                    <div class="photo-item" onclick="openModal(${index})">
+                        <img src="${photo.image}" alt="${photo.title}">
+                        <div class="photo-overlay">
+                            <div class="photo-title">${photo.title}</div>
+                            <div class="photo-date">${photo.date}</div>
+                        </div>
+                    </div>`;
+            });
+
+           
+            const songList = document.getElementById('songList');
+            playlist.forEach((song, index) => {
+                const songItem = document.createElement('li');
+                songItem.className = 'song-item';
+                songItem.style.animationDelay = `${index * 0.15}s`;
+                songItem.onclick = () => openMusicPlayer(song.youtubeId, `${song.title} - ${song.artist}`);
+                songItem.innerHTML = `
+                    <span class="song-icon">${song.icon}</span>
+                    <div class="song-details">
+                        <div class="song-title">${song.title}</div>
+                        <div class="song-artist">${song.artist}</div>
+                    </div>`;
+                songList.appendChild(songItem);
+            });
+
+            
+            document.querySelector('.quiz-section').innerHTML = `
+                <div class="quiz-card">
+                    <h3 class="quiz-question">🌸 Onde foi nosso primeiro encontro?</h3>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">Na praça</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">No cinema</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">Na orgia</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">na quebrada</div>
+                    </div>
+                </div>
+                <div class="quiz-card">
+                    <h3 class="quiz-question">💋 Onde foi nosso primeiro beijo?</h3>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">No puterio</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">Na esquina da casa dela</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">No portão da escola</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">Na minha casa</div>
+                    </div>
+                </div>
+                <div class="quiz-card">
+                    <h3 class="quiz-question">💕 Qual é nossa data especial de namoro?</h3>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">14/02</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">02/05</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">11/09</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">1/05</div>
+
+                    
+                    </div>
+                </div>`;
+            
+            document.querySelector('.love-letter').innerHTML = `
+                <h3 style="text-align: center; color: #8A2BE2; font-size: 1.5em;">💌 Clique para abrir nossa carta de amor 💌</h3>
+                <div class="letter-content">
+                    <p style="font-size: 1.2em; line-height: 1.8; color: #555; text-align: center; margin-top: 20px;">
+                        "Meu amor, como My Melody e Kuromi, somos diferentes mas perfeitos juntos. Cada momento ao seu lado é um presente especial. Nossa história começou na praça, nosso primeiro beijo foi na esquina da sua casa, e desde 02/05 meu coração é só seu. Você é minha doçura e minha aventura, minha paz e minha alegria. Te amo hoje, amanhã e para sempre! 💖🌸"
+                    </p>
+                </div>`;
+        }
+
+        
+        document.getElementById('photoModal').addEventListener('click', (e) => { if (e.target === e.currentTarget) closeModal(); });
+        document.getElementById('musicModal').addEventListener('click', (e) => { if (e.target === e.currentTarget) closeMusicPlayer(); });
+
+        
+        window.onload = function() {
+            buildPage();
+            updateTimer();
+            setInterval(updateTimer, 1000);
+        };
+
+       
+        document.body.classList.add('preloading');
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader-romantico').classList.add('hide');
+                document.body.classList.remove('preloading');
+            }, 3500);
+        });
+    </script>
+
+    <footer class="footer-credits">
+        <p>Feito com 💖 por Kleber Gustavo Costa Bagatini Yuri Fagnani e um sonho, para a sua My Melody.</p>
+    </footer>
+</body>
+</html>
